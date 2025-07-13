@@ -14,6 +14,7 @@ function getEnvConfig(configFile) {
 export default defineConfig({
   e2e: {
     specPattern: 'cypress/e2e/*.cy.{js,jsx,ts,tsx}',
+    reporter: 'mochawesome',
     setupNodeEvents(on, config) {
       // implement node event listeners here
       const configFile = config.env.configFile || 'test'; // default = test
