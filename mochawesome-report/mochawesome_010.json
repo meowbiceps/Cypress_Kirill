@@ -1,0 +1,104 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-07-13T18:45:45.720Z",
+    "end": "2025-07-13T18:45:52.756Z",
+    "duration": 7036,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "df8a589b-c720-4eba-a804-6c50d17c659a",
+      "title": "",
+      "fullFile": "cypress/e2e/hw4.cy.js",
+      "file": "cypress/e2e/hw4.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "96f6090d-9f09-4af7-88cc-d83d212bd920",
+          "title": "Create cars entity API",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Intercept car response test",
+              "fullTitle": "Create cars entity API Intercept car response test",
+              "timedOut": null,
+              "duration": 5207,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('.panel-page .btn-primary').should('be.visible').click();\ncy.get('#addCarBrand').select('Porsche');\ncy.get('#addCarModel').select('911');\ncy.get('#addCarMileage').type('2500');\ncy.intercept('POST', '/api/cars').as('postCars');\ncy.get('.modal-footer .btn-primary').should('be.visible').click();\ncy.wait('@postCars').then(out => {\n  expect(out.response.statusCode).to.eq(201);\n  const carId = out.response.body.data.id;\n  cy.request('/api/cars').then(cars => {\n    const hasId = cars.body.data.some(car => car.id === carId);\n    expect(hasId).to.be.true;\n  });\n  cy.request('POST', '/api/expenses', {\n    \"carId\": carId,\n    \"reportedAt\": \"2025-07-13\",\n    \"mileage\": 2505,\n    \"liters\": 11,\n    \"totalCost\": 11,\n    \"forceMileage\": false\n  });\n});\ncy.get('[routerlink=\"expenses\"]').click();\ncy.get('tbody').contains('13.07.2025');\ncy.get('tbody').contains('2505');\ncy.get('tbody').contains('11L');\ncy.get('tbody').contains('11.00 USD');\ncy.get('[routerlink=\"garage\"]').should('be.visible').click();\ncy.get('[class=\"car_edit btn btn-edit\"]').should('be.visible').click();\ncy.get('[class=\"btn btn-outline-danger\"]').should('be.visible').click();\ncy.get('[class=\"btn btn-danger\"]').should('be.visible').click();\ncy.get('.panel-empty_message').should('be.visible');",
+              "err": {},
+              "uuid": "dd47c0bd-0fdf-4906-b50c-b8c265a031c0",
+              "parentUUID": "96f6090d-9f09-4af7-88cc-d83d212bd920",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "dd47c0bd-0fdf-4906-b50c-b8c265a031c0"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5207,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
