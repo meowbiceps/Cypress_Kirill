@@ -1,4 +1,3 @@
-import '/Users/admin/Documents/Cypress_Kirill/cypress/support/commands.js';
 
 describe('Header Buttons Visibility', () => {
     beforeEach(() => {
