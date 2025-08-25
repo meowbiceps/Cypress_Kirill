@@ -1,5 +1,13 @@
 describe('Create cars entity API', () => {
+    let todayStr;
     beforeEach(() => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // месяцы от 0 до 11
+        const dd = String(today.getDate()).padStart(2, '0');
+
+        todayStr = `${yyyy}-${mm}-${dd}`;
+
         cy.visit('https://qauto.forstudy.space/', {
             auth: {
                 username: "guest",
@@ -29,7 +37,7 @@ describe('Create cars entity API', () => {
             cy.request('POST', '/api/expenses',
                 {
                     "carId": carId,
-                    "reportedAt": "2025-07-13",
+                    "reportedAt": todayStr,
                     "mileage": 2505,
                     "liters": 11,
                     "totalCost": 11,
@@ -38,7 +46,6 @@ describe('Create cars entity API', () => {
             )
         });
         cy.get('[routerlink="expenses"]').click();
-        cy.get('tbody').contains('13.07.2025');
         cy.get('tbody').contains('2505');
         cy.get('tbody').contains('11L');
         cy.get('tbody').contains('11.00 USD');

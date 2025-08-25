@@ -1,0 +1,26 @@
+name: Cypress Tests in Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Run tests in Docker
+      - name: Run Cypress in Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/e2e \
+            -w /e2e \
+            -e CYPRESS_BASE_URL=${{ secrets.BASE_URL }} \
+            cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1 \
+            sh -c "npm ci && npx cypress run --browser chrome"

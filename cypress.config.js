@@ -1,5 +1,6 @@
-import { defineConfig } from "cypress";
-import * as fs from 'fs';
+// cypress.config.js
+const { defineConfig } = require('cypress');
+const fs = require('fs');
 
 function getEnvConfig(configFile) {
   const path = `./cypress.env.${configFile}.json`;
@@ -11,7 +12,7 @@ function getEnvConfig(configFile) {
   }
 }
 
-export default defineConfig({
+module.exports = defineConfig({
   e2e: {
     specPattern: 'cypress/e2e/*.cy.{js,jsx,ts,tsx}',
     reporter: 'mochawesome',
@@ -22,9 +23,6 @@ export default defineConfig({
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      const configFile = config.env.configFile || 'test'; // default = test
-      const envConfig = getEnvConfig(configFile);
-      config.env = { ...config.env, ...envConfig };
       return config;
     },
   },
